@@ -20,6 +20,7 @@
             --border: #1e2b28;
             --accent: #2dd4bf;
             --accent-glow: rgba(45, 212, 191, 0.15);
+            --go-color: #228B22;
             --radius: 14px;
         }
 
@@ -54,15 +55,31 @@
         .nav-inner {
             max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
+            gap: 1rem;
         }
         .nav-logo {
             font-size: 1.3rem; font-weight: 800; color: var(--text);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.02em; flex-shrink: 0;
         }
-        .nav-logo span { color: var(--accent); }
+        .nav-logo span { color: var(--go-color); }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
         .nav-links a:hover { color: var(--accent); }
+
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+        .lang-switch-nav { display: flex; gap: 0.35rem; align-items: center; }
+        .lang-switch-nav button {
+            background: transparent; border: 1px solid var(--border);
+            color: var(--text-muted); padding: 0.3rem 0.6rem;
+            border-radius: 6px; font-size: 0.78rem; cursor: pointer;
+            font-weight: 700; transition: all 0.2s; letter-spacing: 0.03em;
+        }
+        .lang-switch-nav button:hover { border-color: var(--accent); color: var(--accent); }
+        .lang-switch-nav button.active {
+            background: var(--green); color: #fff; border-color: var(--green);
+        }
+
         .nav-burger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text); background: none; border: none; }
 
         @media (max-width: 768px) {
@@ -73,6 +90,8 @@
                 top: 100%; left: 0; right: 0; background: var(--bg);
                 padding: 1rem 1.5rem; gap: 1rem; border-bottom: 1px solid var(--border);
             }
+            .nav-logo { font-size: 1.15rem; }
+            .lang-switch-nav button { padding: 0.25rem 0.5rem; font-size: 0.72rem; }
         }
 
         /* ========== HERO ========== */
@@ -96,7 +115,7 @@
             font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
             letter-spacing: -0.03em; margin-bottom: 1.5rem;
         }
-        .hero h1 span { color: var(--accent); }
+        .hero h1 span { color: var(--go-color); }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2.5rem; }
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .btn {
@@ -195,18 +214,28 @@
         }
         .contact h2 { font-size: 2.2rem; margin-bottom: 1rem; }
         .contact p { font-size: 1.1rem; margin-bottom: 2rem; }
-        .contact-email {
-            display: inline-block; font-size: 1.3rem; font-weight: 700;
-            color: var(--accent); padding: 0.75rem 2rem; border: 1px solid var(--border);
+        .contact-links {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+        }
+        .contact-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 1.1rem; font-weight: 700; color: var(--accent);
+            padding: 0.75rem 1.75rem; border: 1px solid var(--border);
             border-radius: 10px; transition: all 0.2s;
         }
-        .contact-email:hover { border-color: var(--accent); }
+        .contact-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         /* ========== ФУТЕР ========== */
         footer {
             padding: 2rem 1.5rem; text-align: center; border-top: 1px solid var(--border);
         }
         footer p { font-size: 0.9rem; color: var(--text-dim); }
+        footer .footer-links {
+            margin-top: 0.75rem; display: flex; gap: 1.5rem;
+            justify-content: center; flex-wrap: wrap;
+        }
+        footer .footer-links a { color: var(--text-muted); font-size: 0.9rem; }
+        footer .footer-links a:hover { color: var(--accent); }
 
         /* ========== АНИМАЦИИ ========== */
         .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
@@ -220,25 +249,31 @@
     <div class="nav-inner">
         <div class="nav-logo">Gener<span>go</span></div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#about">О проекте</a></li>
-            <li><a href="#directions">Направления</a></li>
-            <li><a href="#vacancies">Вакансии</a></li>
-            <li><a href="#contact">Контакты</a></li>
+            <li><a href="#about" data-i18n="nav.about">О проекте</a></li>
+            <li><a href="#directions" data-i18n="nav.directions">Направления</a></li>
+            <li><a href="#vacancies" data-i18n="nav.vacancies">Вакансии</a></li>
+            <li><a href="#contact" data-i18n="nav.contacts">Контакты</a></li>
         </ul>
-        <button class="nav-burger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        <div class="nav-right">
+            <div class="lang-switch-nav" role="group" aria-label="Language">
+                <button type="button" data-lang="ru" class="active">RU</button>
+                <button type="button" data-lang="en">EN</button>
+                <button type="button" data-lang="kz">KZ</button>
+            </div>
+            <button class="nav-burger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        </div>
     </div>
 </nav>
 
 <!-- ========== HERO ========== -->
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-badge">Стартап · ВИЭ + ИИ</div>
+        <div class="hero-badge" data-i18n="hero.badge">Стартап · ВИЭ + ИИ</div>
         <h1>Gener<span>go</span></h1>
-        <p>Возобновляемая энергетика и искусственный интеллект.
-           Создаём технологии, которые делают чистую энергию умнее и доступнее.</p>
+        <p data-i18n="hero.text">Возобновляемая энергетика и искусственный интеллект. Создаём технологии, которые делают чистую энергию умнее и доступнее.</p>
         <div class="hero-buttons">
-            <a href="#about" class="btn btn-primary">О проекте</a>
-            <a href="#vacancies" class="btn btn-outline">Вакансии</a>
+            <a href="#about" class="btn btn-primary" data-i18n="hero.btnAbout">О проекте</a>
+            <a href="#vacancies" class="btn btn-outline" data-i18n="hero.btnVacancies">Вакансии</a>
         </div>
     </div>
 </section>
@@ -246,35 +281,31 @@
 <!-- ========== О ПРОЕКТЕ ========== -->
 <section id="about">
     <div class="container">
-        <div class="section-label">О проекте</div>
-        <h2 class="section-title">Что мы делаем</h2>
-        <p class="section-subtitle">Genergo объединяет инженеров-проектировщиков возобновляемой энергетики,
-           ML-разработчиков и full-stack инженеров для создания решений нового поколения.</p>
+        <div class="section-label" data-i18n="about.label">О проекте</div>
+        <h2 class="section-title" data-i18n="about.title">Что мы делаем</h2>
+        <p class="section-subtitle" data-i18n="about.subtitle">Genergo объединяет инженеров-проектировщиков возобновляемой энергетики, ML-разработчиков и full-stack инженеров для создания решений нового поколения.</p>
 
         <div class="about-grid">
             <div class="about-text">
-                <p>Мы — стартап на стыке возобновляемой энергетики (ВИЭ) и машинного обучения.
-                   Наша цель — создать интеллектуальную платформу для проектирования,
-                   оптимизации и управления объектами зелёной энергетики.</p>
-                <p>Мы ищем талантливых инженеров и разработчиков, готовых присоединиться
-                   к команде на этапе стажировки и расти вместе с проектом.</p>
+                <p data-i18n="about.p1">Мы — стартап на стыке возобновляемой энергетики (ВИЭ) и машинного обучения. Наша цель — создать интеллектуальную платформу для проектирования, оптимизации и управления объектами зелёной энергетики.</p>
+                <p data-i18n="about.p2">Мы ищем талантливых инженеров и разработчиков, готовых присоединиться к команде на этапе стажировки и расти вместе с проектом.</p>
             </div>
             <div class="about-stats">
                 <div class="stat-card">
                     <div class="stat-number">3</div>
-                    <div class="stat-label">направления</div>
+                    <div class="stat-label" data-i18n="about.stat1">направления</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">100%</div>
-                    <div class="stat-label">удалённый формат</div>
+                    <div class="stat-label" data-i18n="about.stat2">удалённый формат</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">0</div>
-                    <div class="stat-label">опыта достаточно</div>
+                    <div class="stat-label" data-i18n="about.stat3">опыта достаточно</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">∞</div>
-                    <div class="stat-label">простор для идей</div>
+                    <div class="stat-label" data-i18n="about.stat4">простор для идей</div>
                 </div>
             </div>
         </div>
@@ -284,32 +315,25 @@
 <!-- ========== НАПРАВЛЕНИЯ ========== -->
 <section id="directions">
     <div class="container">
-        <div class="section-label">Направления</div>
-        <h2 class="section-title">Три ключевых направления</h2>
-        <p class="section-subtitle">Каждое направление — это отдельная команда и свой набор задач.
-           Можно выбрать одно или работать на стыке нескольких.</p>
+        <div class="section-label" data-i18n="dir.label">Направления</div>
+        <h2 class="section-title" data-i18n="dir.title">Три ключевых направления</h2>
+        <p class="section-subtitle" data-i18n="dir.subtitle">Каждое направление — это отдельная команда и свой набор задач. Можно выбрать одно или работать на стыке нескольких.</p>
 
         <div class="directions-grid">
             <div class="direction-card fade-in">
                 <div class="direction-icon">⚡</div>
-                <h3>Инженерия ВИЭ</h3>
-                <p>Проектирование объектов возобновляемой энергетики:
-                   солнечные электростанции, ветропарки, гибридные системы.
-                   Расчёты, моделирование, подбор оборудования.</p>
+                <h3 data-i18n="dir.c1.title">Инженерия ВИЭ</h3>
+                <p data-i18n="dir.c1.text">Проектирование объектов возобновляемой энергетики: солнечные электростанции, ветропарки, гибридные системы. Расчёты, моделирование, подбор оборудования.</p>
             </div>
             <div class="direction-card fade-in">
                 <div class="direction-icon">🤖</div>
-                <h3>ML и ИИ</h3>
-                <p>Разработка моделей машинного обучения для прогнозирования
-                   выработки энергии, оптимизации режимов работы и
-                   интеллектуального управления объектами ВИЭ.</p>
+                <h3 data-i18n="dir.c2.title">ML и ИИ</h3>
+                <p data-i18n="dir.c2.text">Разработка моделей машинного обучения для прогнозирования выработки энергии, оптимизации режимов работы и интеллектуального управления объектами ВИЭ.</p>
             </div>
             <div class="direction-card fade-in">
                 <div class="direction-icon">💻</div>
-                <h3>Full-stack разработка</h3>
-                <p>Создание веб-платформы: backend, frontend, API, базы данных.
-                   Интеграция ML-моделей в продакшен, визуализация данных,
-                   пользовательские интерфейсы.</p>
+                <h3 data-i18n="dir.c3.title">Full-stack разработка</h3>
+                <p data-i18n="dir.c3.text">Создание веб-платформы: backend, frontend, API, базы данных. Интеграция ML-моделей в продакшен, визуализация данных, пользовательские интерфейсы.</p>
             </div>
         </div>
     </div>
@@ -318,55 +342,51 @@
 <!-- ========== ВАКАНСИИ ========== -->
 <section id="vacancies">
     <div class="container">
-        <div class="section-label">Вакансии</div>
-        <h2 class="section-title">Открытые позиции для стажировки</h2>
-        <p class="section-subtitle">Ищем мотивированных специалистов для стажировки в стартапе.
-           Удалённый формат, гибкий график, реальные задачи.</p>
+        <div class="section-label" data-i18n="vac.label">Вакансии</div>
+        <h2 class="section-title" data-i18n="vac.title">Открытые позиции для стажировки</h2>
+        <p class="section-subtitle" data-i18n="vac.subtitle">Ищем мотивированных специалистов для стажировки в стартапе. Удалённый формат, гибкий график, реальные задачи.</p>
 
         <div class="vacancies-grid">
-            <!-- ВАКАНСИЯ 1 -->
+            <!-- ВАКАНСИЯ 1: Инженер-проектировщик ВИЭ -->
             <div class="vacancy-card fade-in">
-                <span class="vacancy-tag">Стажировка</span>
-                <h3>Инженер-проектировщик ВИЭ</h3>
-                <p class="vacancy-desc">Проектирование объектов возобновляемой энергетики,
-                   работа с расчётами и документацией.</p>
+                <span class="vacancy-tag" data-i18n="vac.tag">Стажировка</span>
+                <h3 data-i18n="vac.v1.title">Инженер-проектировщик ВИЭ</h3>
+                <p class="vacancy-desc" data-i18n="vac.v1.desc">Проектирование объектов возобновляемой энергетики, работа с расчётами и документацией.</p>
                 <ul class="vacancy-req">
-                    <li>Знание основ электроэнергетики</li>
-                    <li>Опыт работы с САПР (AutoCAD, nanoCAD)</li>
-                    <li>Понимание принципов ВИЭ</li>
-                    <li>Умение работать с нормативной документацией</li>
+                    <li data-i18n="vac.v1.r1">Знание основ электроэнергетики</li>
+                    <li data-i18n="vac.v1.r2">Опыт работы с САПР (AutoCAD, nanoCAD)</li>
+                    <li data-i18n="vac.v1.r3">Понимание принципов ВИЭ</li>
+                    <li data-i18n="vac.v1.r4">Умение работать с нормативной документацией</li>
                 </ul>
-                <a href="#contact" class="vacancy-apply">Откликнуться</a>
+                <a href="https://forms.gle/kMJqkreXfpr6nAjN9" target="_blank" rel="noopener" class="vacancy-apply" data-i18n="vac.apply">Откликнуться</a>
             </div>
 
-            <!-- ВАКАНСИЯ 2 -->
+            <!-- ВАКАНСИЯ 2: ML-разработчик -->
             <div class="vacancy-card fade-in">
-                <span class="vacancy-tag">Стажировка</span>
-                <h3>ML-разработчик</h3>
-                <p class="vacancy-desc">Разработка моделей машинного обучения для
-                   прогнозирования и оптимизации в сфере энергетики.</p>
+                <span class="vacancy-tag" data-i18n="vac.tag">Стажировка</span>
+                <h3 data-i18n="vac.v2.title">ML-разработчик</h3>
+                <p class="vacancy-desc" data-i18n="vac.v2.desc">Разработка моделей машинного обучения для прогнозирования и оптимизации в сфере энергетики.</p>
                 <ul class="vacancy-req">
-                    <li>Python, NumPy, Pandas, Scikit-learn</li>
-                    <li>Понимание ML-алгоритмов и нейросетей</li>
-                    <li>Опыт с PyTorch или TensorFlow</li>
-                    <li>Базовое знание энергетики — плюс</li>
+                    <li data-i18n="vac.v2.r1">Python, NumPy, Pandas, Scikit-learn</li>
+                    <li data-i18n="vac.v2.r2">Понимание ML-алгоритмов и нейросетей</li>
+                    <li data-i18n="vac.v2.r3">Опыт с PyTorch или TensorFlow</li>
+                    <li data-i18n="vac.v2.r4">Базовое знание энергетики — плюс</li>
                 </ul>
-                <a href="#contact" class="vacancy-apply">Откликнуться</a>
+                <a href="https://forms.gle/hHng1LGRWEayKxJ68" target="_blank" rel="noopener" class="vacancy-apply" data-i18n="vac.apply">Откликнуться</a>
             </div>
 
-            <!-- ВАКАНСИЯ 3 -->
+            <!-- ВАКАНСИЯ 3: Full-stack разработчик -->
             <div class="vacancy-card fade-in">
-                <span class="vacancy-tag">Стажировка</span>
-                <h3>Full-stack разработчик</h3>
-                <p class="vacancy-desc">Разработка веб-платформы: backend, frontend,
-                   API, интеграция ML-моделей.</p>
+                <span class="vacancy-tag" data-i18n="vac.tag">Стажировка</span>
+                <h3 data-i18n="vac.v3.title">Full-stack разработчик</h3>
+                <p class="vacancy-desc" data-i18n="vac.v3.desc">Разработка веб-платформы: backend, frontend, API, интеграция ML-моделей.</p>
                 <ul class="vacancy-req">
-                    <li>JavaScript/TypeScript, React или Vue</li>
-                    <li>Python (FastAPI/Django) или Node.js</li>
-                    <li>Базы данных (PostgreSQL, SQLite)</li>
-                    <li>Git, базовое понимание Docker</li>
+                    <li data-i18n="vac.v3.r1">JavaScript/TypeScript, React или Vue</li>
+                    <li data-i18n="vac.v3.r2">Python (FastAPI/Django) или Node.js</li>
+                    <li data-i18n="vac.v3.r3">Базы данных (PostgreSQL, SQLite)</li>
+                    <li data-i18n="vac.v3.r4">Git, базовое понимание Docker</li>
                 </ul>
-                <a href="#contact" class="vacancy-apply">Откликнуться</a>
+                <a href="https://forms.gle/Jm9nDLK1DHJc7U4F9" target="_blank" rel="noopener" class="vacancy-apply" data-i18n="vac.apply">Откликнуться</a>
             </div>
         </div>
     </div>
@@ -375,37 +395,235 @@
 <!-- ========== КОНТАКТЫ ========== -->
 <section id="contact" class="contact">
     <div class="container">
-        <div class="section-label">Контакты</div>
-        <h2>Присоединяйтесь к команде</h2>
-        <p>Напишите нам — расскажите о себе, своём опыте и почему вам интересно наше направление.</p>
-        <a href="mailto:genergoai@gmail.com" class="contact-email">genergoai@gmail.com</a>
+        <div class="section-label" data-i18n="contact.label">Контакты</div>
+        <h2 data-i18n="contact.title">Присоединяйтесь к команде</h2>
+        <p data-i18n="contact.text">Напишите нам — расскажите о себе, своём опыте и почему вам интересно наше направление.</p>
+        <div class="contact-links">
+            <a href="mailto:genergoai@gmail.com" class="contact-btn">✉️ genergoai@gmail.com</a>
+            <a href="https://t.me/genergoai" target="_blank" rel="noopener" class="contact-btn">✈️ Telegram</a>
+        </div>
     </div>
 </section>
 
 <!-- ========== ФУТЕР ========== -->
 <footer>
-    <p>© 2026 Genergo. Возобновляемая энергетика + ИИ.</p>
+    <p data-i18n="footer.copyright">© 2026 GenergoAI. Возобновляемая энергетика + ИИ.</p>
+    <div class="footer-links">
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+    </div>
 </footer>
 
-<!-- ========== JS: анимация появления ========== -->
+<!-- ========== JS: анимация + i18n ========== -->
 <script>
-    // Плавное появление элементов при скролле
+    // ----- Плавное появление элементов при скролле -----
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Закрытие мобильного меню при клике
+    // ----- Закрытие мобильного меню -----
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             document.getElementById('navLinks').classList.remove('open');
         });
     });
+
+    // ----- Локализация -----
+    const translations = {
+        ru: {
+            "nav.about": "О проекте",
+            "nav.directions": "Направления",
+            "nav.vacancies": "Вакансии",
+            "nav.contacts": "Контакты",
+            "hero.badge": "Стартап · ВИЭ + ИИ",
+            "hero.text": "Возобновляемая энергетика и искусственный интеллект. Создаём технологии, которые делают чистую энергию умнее и доступнее.",
+            "hero.btnAbout": "О проекте",
+            "hero.btnVacancies": "Вакансии",
+            "about.label": "О проекте",
+            "about.title": "Что мы делаем",
+            "about.subtitle": "Genergo объединяет инженеров-проектировщиков возобновляемой энергетики, ML-разработчиков и full-stack инженеров для создания решений нового поколения.",
+            "about.p1": "Мы — стартап на стыке возобновляемой энергетики (ВИЭ) и машинного обучения. Наша цель — создать интеллектуальную платформу для проектирования, оптимизации и управления объектами зелёной энергетики.",
+            "about.p2": "Мы ищем талантливых инженеров и разработчиков, готовых присоединиться к команде на этапе стажировки и расти вместе с проектом.",
+            "about.stat1": "направления",
+            "about.stat2": "удалённый формат",
+            "about.stat3": "опыта достаточно",
+            "about.stat4": "простор для идей",
+            "dir.label": "Направления",
+            "dir.title": "Три ключевых направления",
+            "dir.subtitle": "Каждое направление — это отдельная команда и свой набор задач. Можно выбрать одно или работать на стыке нескольких.",
+            "dir.c1.title": "Инженерия ВИЭ",
+            "dir.c1.text": "Проектирование объектов возобновляемой энергетики: солнечные электростанции, ветропарки, гибридные системы. Расчёты, моделирование, подбор оборудования.",
+            "dir.c2.title": "ML и ИИ",
+            "dir.c2.text": "Разработка моделей машинного обучения для прогнозирования выработки энергии, оптимизации режимов работы и интеллектуального управления объектами ВИЭ.",
+            "dir.c3.title": "Full-stack разработка",
+            "dir.c3.text": "Создание веб-платформы: backend, frontend, API, базы данных. Интеграция ML-моделей в продакшен, визуализация данных, пользовательские интерфейсы.",
+            "vac.label": "Вакансии",
+            "vac.title": "Открытые позиции для стажировки",
+            "vac.subtitle": "Ищем мотивированных специалистов для стажировки в стартапе. Удалённый формат, гибкий график, реальные задачи.",
+            "vac.tag": "Стажировка",
+            "vac.apply": "Откликнуться",
+            "vac.v1.title": "Инженер-проектировщик ВИЭ",
+            "vac.v1.desc": "Проектирование объектов возобновляемой энергетики, работа с расчётами и документацией.",
+            "vac.v1.r1": "Знание основ электроэнергетики",
+            "vac.v1.r2": "Опыт работы с САПР (AutoCAD, nanoCAD)",
+            "vac.v1.r3": "Понимание принципов ВИЭ",
+            "vac.v1.r4": "Умение работать с нормативной документацией",
+            "vac.v2.title": "ML-разработчик",
+            "vac.v2.desc": "Разработка моделей машинного обучения для прогнозирования и оптимизации в сфере энергетики.",
+            "vac.v2.r1": "Python, NumPy, Pandas, Scikit-learn",
+            "vac.v2.r2": "Понимание ML-алгоритмов и нейросетей",
+            "vac.v2.r3": "Опыт с PyTorch или TensorFlow",
+            "vac.v2.r4": "Базовое знание энергетики — плюс",
+            "vac.v3.title": "Full-stack разработчик",
+            "vac.v3.desc": "Разработка веб-платформы: backend, frontend, API, интеграция ML-моделей.",
+            "vac.v3.r1": "JavaScript/TypeScript, React или Vue",
+            "vac.v3.r2": "Python (FastAPI/Django) или Node.js",
+            "vac.v3.r3": "Базы данных (PostgreSQL, SQLite)",
+            "vac.v3.r4": "Git, базовое понимание Docker",
+            "contact.label": "Контакты",
+            "contact.title": "Присоединяйтесь к команде",
+            "contact.text": "Напишите нам — расскажите о себе, своём опыте и почему вам интересно наше направление.",
+            "footer.copyright": "© 2026 GenergoAI. Возобновляемая энергетика + ИИ.",
+            "footer.privacy": "Privacy Policy"
+        },
+        en: {
+            "nav.about": "About",
+            "nav.directions": "Directions",
+            "nav.vacancies": "Vacancies",
+            "nav.contacts": "Contacts",
+            "hero.badge": "Startup · Renewables + AI",
+            "hero.text": "Renewable energy and artificial intelligence. We build technology that makes clean energy smarter and more accessible.",
+            "hero.btnAbout": "About",
+            "hero.btnVacancies": "Vacancies",
+            "about.label": "About",
+            "about.title": "What we do",
+            "about.subtitle": "Genergo brings together renewable energy design engineers, ML developers, and full-stack engineers to build next-generation solutions.",
+            "about.p1": "We are a startup at the intersection of renewable energy and machine learning. Our goal is to create an intelligent platform for designing, optimizing, and managing green energy assets.",
+            "about.p2": "We are looking for talented engineers and developers ready to join the team as interns and grow with the project.",
+            "about.stat1": "directions",
+            "about.stat2": "remote format",
+            "about.stat3": "no experience needed",
+            "about.stat4": "room for ideas",
+            "dir.label": "Directions",
+            "dir.title": "Three key directions",
+            "dir.subtitle": "Each direction is a separate team with its own set of tasks. You can choose one or work at the intersection of several.",
+            "dir.c1.title": "Renewable Energy Engineering",
+            "dir.c1.text": "Design of renewable energy facilities: solar power plants, wind farms, hybrid systems. Calculations, modeling, equipment selection.",
+            "dir.c2.title": "ML & AI",
+            "dir.c2.text": "Development of machine learning models for energy generation forecasting, operation mode optimization, and intelligent management of renewable energy assets.",
+            "dir.c3.title": "Full-stack Development",
+            "dir.c3.text": "Building the web platform: backend, frontend, API, databases. Integrating ML models into production, data visualization, user interfaces.",
+            "vac.label": "Vacancies",
+            "vac.title": "Open internship positions",
+            "vac.subtitle": "We are looking for motivated specialists for internships at a startup. Remote format, flexible schedule, real tasks.",
+            "vac.tag": "Internship",
+            "vac.apply": "Apply",
+            "vac.v1.title": "Renewable Energy Design Engineer",
+            "vac.v1.desc": "Design of renewable energy facilities, work with calculations and documentation.",
+            "vac.v1.r1": "Knowledge of electric power basics",
+            "vac.v1.r2": "Experience with CAD (AutoCAD, nanoCAD)",
+            "vac.v1.r3": "Understanding of renewable energy principles",
+            "vac.v1.r4": "Ability to work with regulatory documentation",
+            "vac.v2.title": "ML Developer",
+            "vac.v2.desc": "Development of machine learning models for forecasting and optimization in energy.",
+            "vac.v2.r1": "Python, NumPy, Pandas, Scikit-learn",
+            "vac.v2.r2": "Understanding of ML algorithms and neural networks",
+            "vac.v2.r3": "Experience with PyTorch or TensorFlow",
+            "vac.v2.r4": "Basic knowledge of energy — a plus",
+            "vac.v3.title": "Full-stack Developer",
+            "vac.v3.desc": "Web platform development: backend, frontend, API, ML model integration.",
+            "vac.v3.r1": "JavaScript/TypeScript, React or Vue",
+            "vac.v3.r2": "Python (FastAPI/Django) or Node.js",
+            "vac.v3.r3": "Databases (PostgreSQL, SQLite)",
+            "vac.v3.r4": "Git, basic understanding of Docker",
+            "contact.label": "Contacts",
+            "contact.title": "Join the team",
+            "contact.text": "Write to us — tell us about yourself, your experience, and why our direction interests you.",
+            "footer.copyright": "© 2026 GenergoAI. Renewable energy + AI.",
+            "footer.privacy": "Privacy Policy"
+        },
+        kz: {
+            "nav.about": "Жоба туралы",
+            "nav.directions": "Бағыттар",
+            "nav.vacancies": "Вакансиялар",
+            "nav.contacts": "Байланыс",
+            "hero.badge": "Стартап · ЖЭК + ЖИ",
+            "hero.text": "Жаңартылатын энергетика және жасанды интеллект. Таза энергияны ақылды әрі қолжетімді ететін технологиялар жасаймыз.",
+            "hero.btnAbout": "Жоба туралы",
+            "hero.btnVacancies": "Вакансиялар",
+            "about.label": "Жоба туралы",
+            "about.title": "Біз не істейміз",
+            "about.subtitle": "Genergo жаңартылатын энергетика инженер-жобалаушыларын, ML әзірлеушілерін және full-stack инженерлерін жаңа буын шешімдерін жасау үшін біріктіреді.",
+            "about.p1": "Біз жаңартылатын энергетика (ЖЭК) мен машиналық оқыту тоғысындағы стартаппыз. Біздің мақсатымыз — жасыл энергетика нысандарын жобалауға, оңтайландыруға және басқаруға арналған интеллектуалды платформа жасау.",
+            "about.p2": "Біз жобамен бірге өсуге дайын талантты инженерлер мен әзірлеушілерді іздейміз.",
+            "about.stat1": "бағыт",
+            "about.stat2": "қашықтан формат",
+            "about.stat3": "тәжірибе жеткілікті",
+            "about.stat4": "идеяларға орын",
+            "dir.label": "Бағыттар",
+            "dir.title": "Үш негізгі бағыт",
+            "dir.subtitle": "Әр бағыт — жеке команда және өз міндеттері. Біреуін таңдауға немесе бірнешеуінің тоғысында жұмыс істеуге болады.",
+            "dir.c1.title": "ЖЭК инженериясы",
+            "dir.c1.text": "Жаңартылатын энергетика нысандарын жобалау: күн электр станциялары, жел парктері, гибридті жүйелер. Есептеулер, модельдеу, жабдық таңдау.",
+            "dir.c2.title": "ML және ЖИ",
+            "dir.c2.text": "Энергия өндіруді болжау, жұмыс режимдерін оңтайландыру және ЖЭК нысандарын интеллектуалды басқару үшін машиналық оқыту модельдерін әзірлеу.",
+            "dir.c3.title": "Full-stack әзірлеу",
+            "dir.c3.text": "Веб-платформаны құру: backend, frontend, API, дерекқорлар. ML модельдерін продакшнге интеграциялау, деректерді визуализациялау, пайдаланушы интерфейстері.",
+            "vac.label": "Вакансиялар",
+            "vac.title": "Тағылымдамаға ашық орындар",
+            "vac.subtitle": "Стартапта тағылымдамадан өтуге ынталы мамандарды іздейміз. Қашықтан формат, икемді кесте, нақты міндеттер.",
+            "vac.tag": "Тағылымдама",
+            "vac.apply": "Өтініш беру",
+            "vac.v1.title": "ЖЭК инженер-жобалаушысы",
+            "vac.v1.desc": "Жаңартылатын энергетика нысандарын жобалау, есептеулермен және құжаттамамен жұмыс.",
+            "vac.v1.r1": "Электр энергетикасы негіздерін білу",
+            "vac.v1.r2": "САПР-мен жұмыс тәжірибесі (AutoCAD, nanoCAD)",
+            "vac.v1.r3": "ЖЭК принциптерін түсіну",
+            "vac.v1.r4": "Нормативтік құжаттамамен жұмыс істей білу",
+            "vac.v2.title": "ML әзірлеушісі",
+            "vac.v2.desc": "Энергетика саласында болжау және оңтайландыру үшін машиналық оқыту модельдерін әзірлеу.",
+            "vac.v2.r1": "Python, NumPy, Pandas, Scikit-learn",
+            "vac.v2.r2": "ML алгоритмдері мен нейрондық желілерді түсіну",
+            "vac.v2.r3": "PyTorch немесе TensorFlow тәжірибесі",
+            "vac.v2.r4": "Энергетиканы базалық білу — плюс",
+            "vac.v3.title": "Full-stack әзірлеушісі",
+            "vac.v3.desc": "Веб-платформаны әзірлеу: backend, frontend, API, ML модельдерін интеграциялау.",
+            "vac.v3.r1": "JavaScript/TypeScript, React немесе Vue",
+            "vac.v3.r2": "Python (FastAPI/Django) немесе Node.js",
+            "vac.v3.r3": "Дерекқорлар (PostgreSQL, SQLite)",
+            "vac.v3.r4": "Git, Docker негіздерін түсіну",
+            "contact.label": "Байланыс",
+            "contact.title": "Командаға қосылыңыз",
+            "contact.text": "Бізге жазыңыз — өзіңіз, тәжірибеңіз және біздің бағыт неге қызықтыратыны туралы айтыңыз.",
+            "footer.copyright": "© 2026 GenergoAI. Жаңартылатын энергетика + ЖИ.",
+            "footer.privacy": "Privacy Policy"
+        }
+    };
+
+    function applyLang(lang) {
+        const dict = translations[lang] || translations.ru;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (dict[key] !== undefined) el.textContent = dict[key];
+        });
+        document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
+
+        document.querySelectorAll('.lang-switch-nav button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        try { localStorage.setItem('genergo_lang', lang); } catch (e) {}
+    }
+
+    document.querySelectorAll('.lang-switch-nav button').forEach(btn => {
+        btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+    });
+
+    let savedLang = 'ru';
+    try { savedLang = localStorage.getItem('genergo_lang') || 'ru'; } catch (e) {}
+    applyLang(savedLang);
 </script>
 
 </body>
